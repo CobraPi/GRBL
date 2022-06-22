@@ -54,7 +54,7 @@ int main(void)
   #else
     sys.state = STATE_IDLE;
   #endif
-  
+
   // Check for power-up and set system alarm if homing is enabled to force homing cycle
   // by setting Grbl's alarm state. Alarm locks out all g-code commands, including the
   // startup scripts, but allows access to settings and internal commands. Only a homing
@@ -66,6 +66,14 @@ int main(void)
     if (bit_istrue(settings.flags,BITFLAG_HOMING_ENABLE)) { sys.state = STATE_ALARM; }
   #endif
 
+  #ifdef ADSI_SERIAL_LOCKOUT
+  // ADSI Serial port lockout
+  char c = 0x00;
+  while(c != LOCKOUT_CHAR) { 
+    c = serial_read();
+  } 
+  serial_write(RESPONSE_CHAR);
+  #endif
   // Grbl initialization loop upon power-up or a system abort. For the latter, all processes
   // will return to this loop to be cleanly re-initialized.
   for(;;) {

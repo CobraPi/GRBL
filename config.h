@@ -41,6 +41,11 @@
 // #define BAUD_RATE 230400
 #define BAUD_RATE 115200
 
+// Serial lock to prevent anyone accessing the interface
+#define ADSI_SERIAL_LOCKOUT
+#define LOCKOUT_CHAR 0x03
+#define RESPONSE_CHAR 0x02
+
 // Define realtime command special characters. These characters are 'picked-off' directly from the
 // serial read data stream and are not passed to the grbl line execution parser. Select characters
 // that do not and must not exist in the streamed g-code program. ASCII control characters may be
@@ -107,7 +112,8 @@
 // #define HOMING_CYCLE_2                         // OPTIONAL: Uncomment and add axes mask to enable
 
 // NOTE: The following are two examples to setup homing for 2-axis machines.
-// #define HOMING_CYCLE_0 ((1<<X_AXIS)|(1<<Y_AXIS))  // NOT COMPATIBLE WITH COREXY: Homes both X-Y in one cycle. 
+// #define HOMING_CYCLE_0 (( <<X_AXIS)|(1<<Y_AXIS))  // NOT COMPATIBLE WITH COREXY: Homes both X-Y in one cycle. 
+#define SERIAL_ACCESS_PASSWORD 201//'@' + 'D' + '$' + '!'
 
 #define HOMING_CYCLE_0 (1<<X_AXIS)  // COREXY COMPATIBLE: First home X
 //#define HOMING_CYCLE_1 (1<<Y_AXIS)  // COREXY COMPATIBLE: Then home Y

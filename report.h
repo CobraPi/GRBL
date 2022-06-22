@@ -84,6 +84,10 @@
 #define MESSAGE_SPINDLE_RESTORE 10
 #define MESSAGE_SLEEP_MODE 11
 
+
+// Prints out serial-lock password prompt at startup
+void report_startup_password();
+
 // Prints system status messages.
 void report_status_message(uint8_t status_code);
 
